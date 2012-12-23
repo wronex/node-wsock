@@ -1,0 +1,33 @@
+{
+	"author": {
+		"name": "wronex",
+		"email": "code@wronex.com"
+	},
+	"name": "wsock",
+	"description": "An implimentation of the Web Socket protocol, both as server and client.",
+	"version": "1.0.0",
+	"keywords": [
+		"wsocket",
+		"wsock"
+	],
+	"engines": {
+		"node": ">= 0.6.0"
+	},
+	"dependencies": {},
+	"devDependencies": {},
+	"homepage": "http://wronex.github.com/node-wsock",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/wronex/node-wsock.git"
+	},
+	"bugs": {
+		"url": "https://github.com/wronex/node-wsock/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://github.com/wronex/node-wsock/LICENSE"
+		}
+	],
+	"main": "./lib/websocket.js"
+}

@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+	var socket;
+	var url = "ws://127.0.0.1:1337";
+	var sent;
+
+	window.onload = function() {
+		socket = new WebSocket(url);
+		socket.onopen = onopen;
+		socket.onmessage = onmessage;
+		socket.onclose = onclose;
+		socket.onerror = onerror;
+		
+		log('Socket status: ' + socket.readyState, 'event');
+		
+		document.getElementById('disconnect').onclick = disconnect;
+		document.getElementById('sendLongMsg').onclick = function() {
+			sendRandomData(Math.random() * 20000 + 20000);
+		};
+		document.getElementById('sendLongerMsg').onclick = function() {
+			sendRandomData(Math.random() * 50000 + 50000);
+		};
+		
+		var input = document.getElementById('text');
+		input.focus();
+		input.onkeydown = onkeydown;
+	}
+	
+	function send(data) {
+		socket.send(data);
+		sent = data;
+		log('Sent: ' + (data.length > 64 ? data.length + ' bytes' : data), 'event');
+	}
+	
+	function disconnect() {
+		socket.close();
+	}
+	
+	function sendRandomData(len) {
+		var data = '';
+		for (var i = len || 10; i > 0; i--) {
+			data += String.fromCharCode(255 * Math.random() | 0);
+		}
+		send(data);
+	}
+	
+	function onkeydown(event) {
+		if (event.keyCode != 13)
+			return;
+		
+		if (!this.value || this.value.length == 0)
+			return;
+		
+		send(this.value);		
+		this.value = '';
+	}
+	
+	function onopen() {
+		log('Socket status: open ' + socket.readyState, 'event');
+	}
+	
+	function onmessage(msg) {
+		log('Recieved: ' + (msg.data.length > 65 ? msg.data.length + ' bytes' : msg.data));
+		
+		if (sent != msg.data)
+			log('No match!', 'error');
+	}
+	
+	function onclose() {
+		log('Socket status: closed ' + socket.readyState, 'warning');
+	}
+	
+	function onerror(ex) {
+		log('Socket error: ' + ex, 'error');
+	}
+	
+	function log(msg, className) {
+		var p = document.createElement('p');
+		p.className = className || '';
+		p.innerHTML = msg;
+	
+		var div = document.getElementById('log');		
+		div.appendChild(p);
+		div.scrollTop = div.scrollHeight
+	}
+</script>
+<style type="text/css">
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	
+	#container {
+		width: 800px;
+		margin: 0 auto;
+		padding: 10px;
+	}
+
+	#log {
+		padding: 5px;
+		border: 1px solid black;
+		height: 200px;
+		overflow-y: scroll;
+	}
+
+	#log p {
+		margin: 0;
+	}
+	
+	.event {
+		color: #999;
+	}
+	
+	.warning {
+		color: orange;
+	}
+	
+	.error {
+		color: red;
+	}
+</style>
+<title>WebSockets Client</title>
+</head>
+<body>
+  <div id="wrapper">
+  	<div id="container">
+    	<h1>WebSockets Client</h1>
+        <div id="log"></div>
+    	<input id="text" type="text" />
+        <button id="sendLongMsg">Send long message</button>
+        <button id="sendLongerMsg">Send longer message</button>
+        <button id="disconnect">Disconnect</button>
+	</div>
+  </div>
+</body>
+</html>​
