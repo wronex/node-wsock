@@ -1,6 +1,6 @@
 # wsock
-wsock is an easy to use wsocket implementation, as described by RFC 6455,
-except for protocol extensions. It features both wsocket server and client. 
+wsock is an easy to use WebSocket implementation, as described by RFC 6455,
+except for protocol extensions. It features both WebSocket server and client. 
 
 ## Installation
 ```bash
@@ -8,7 +8,7 @@ $ [sudo] npm install wsock
 ```
 
 ## Usage
-### As a server
+### Server example
 ```javascript
 var wsock = require('wsock');
 

@@ -8,7 +8,10 @@
 	"version": "1.0.0",
 	"keywords": [
 		"wsocket",
-		"wsock"
+		"wsock",
+		"WebSocket",
+		"web",
+		"socket"
 	],
 	"engines": {
 		"node": ">= 0.6.0"
